@@ -1,51 +1,46 @@
 #include <iostream>
-#include <cstdlib>  // For rand and srand
-#include <ctime>    // For the time method
+#include <ctime> 
+#include <cstdlib>
 
 using namespace std;
+
 int main()
 {
-    const int MIN_VALUE = 1,
-              MAX_VALUE = 10;
-
-    int random_num,
-        user_num,
-        number_of_guesses = 0;
-
-    unsigned seed = time(0);
-
-    srand(seed);
-
-    random_num = (rand() % 
-                 (MAX_VALUE - MIN_VALUE + 1)) + 
-                  MIN_VALUE;
+    int number, initial_guess = 1; total1 = 0, total2 = 0, sum_of_guesses; 
+    int max = 10, random_number;
     
-    // cout << "Random number is: " 
-    //      << random_num 
-    //      << endl 
-    //      << endl;
-
-    cout << "Guess a number between 1 and 10." << endl;
-    cin >> user_num;
-    number_of_guesses++;
-
-    while (user_num != random_num)
+    cout << "Welcome to the number game:" << endl; 
+    cout << "Guess what number will it be: (1-10)" << endl; 
+    cin >> number; 
+    
+    unsigned seed = time(0);
+    srand(seed); 
+    random_number = rand()%max+1; 
+    
+    while (number > random_number)
     {
-        cout << "Your number is "
-             << (user_num < random_num ? 
-                "lower." : "higher.");
-
-        cout << "Try again: ";
-
-        cin >> user_num;
-        number_of_guesses++;
+        int guess = 0; 
+        cout << "Too high, try again." << endl; 
+        cin >> number;
+        guess++; 
+        total1 += guess; 
+    }
+    while (number < random_number)
+    {
+        int guess = 0; 
+        cout << "Too low, try again." << endl; 
+        cin >> number; 
+        guess++; 
+        total2 += guess; 
     }
     
-    cout << "\nCorrect! " << endl;
-    cout << "Random number      = " << random_num << endl;
-    cout << "Your guess         = " << user_num   << endl;
-    cout << "Number of guesses  = " << number_of_guesses << endl;
-    cout << endl;
-
+    sum_of_guesses = total1 + total2 + initial_guess; 
+    if (number == random_number)
+    {
+        cout << "Your response " << number << endl; 
+        cout << "Actual number " << random_number << endl;
+        cout << "Your answer is correct!" << endl; 
+        cout << "Your total number of guesses is " << sum_of_guesses; 
+    }
     return 0;
 }
